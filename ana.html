@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Ana</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:black;
+font-family:Georgia;
+overflow:hidden;
+}
+
+/* envelope */
+
+.envelope{
+width:300px;
+height:180px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+border-radius:10px;
+box-shadow:0 20px 40px rgba(0,0,0,.6);
+position:absolute;
+}
+
+/* carta */
+
+.letter{
+position:absolute;
+width:90%;
+max-width:520px;
+height:70vh;
+background:white;
+padding:30px;
+border-radius:10px;
+transform:translateY(120%);
+transition:1s;
+overflow:auto;
+font-size:20px;
+line-height:1.8;
+}
+
+.open .letter{
+transform:translateY(0);
+}
+
+.line{
+margin-bottom:10px;
+}
+
+.line b{
+font-size:26px;
+color:#c2185b;
+}
+
+.final{
+text-align:center;
+font-size:28px;
+margin-top:40px;
+color:#d81b60;
+display:none;
+}
+
+/* rosas */
+
+.rose{
+position:absolute;
+top:-40px;
+font-size:26px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px)}
+100%{transform:translateY(110vh)}
+}
+
+/* corações */
+
+.heart{
+position:absolute;
+bottom:-40px;
+font-size:20px;
+animation:rise linear infinite;
+}
+
+@keyframes rise{
+0%{transform:translateY(0)}
+100%{transform:translateY(-110vh)}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="envelope" id="env">
+Exclusivamente para Ana
+</div>
+
+<div class="letter">
+
+<div id="text"></div>
+
+<div class="final" id="finalText">
+BONNE NUIT LA BELLE ANA
+</div>
+
+</div>
+
+<audio id="music">
+<source src="musica.m4a">
+</audio>
+
+<script>
+
+const lines=[
+
+["A"," noite chega e o mundo fica mais calmo."],
+["N"," esse momento silencioso pensei em você."],
+["A"," penas para desejar algo simples."],
+
+["P"," az para o seu coração nesta noite."],
+["A"," s estrelas iluminando seus sonhos."],
+["U"," m descanso tranquilo depois do dia."],
+["L"," eveza para sua mente descansar."],
+["A"," manhã trazendo novas alegrias."],
+
+["C"," om todo respeito deixo este pensamento."],
+["O"," nde sua noite seja bonita e serena."],
+["S"," eus sonhos suaves como a brisa da noite."],
+["T"," oda tranquilidade do céu para você."],
+["A"," ssim desejo uma boa noite."]
+
+];
+
+let index=0;
+
+function writeLine(){
+
+if(index<lines.length){
+
+let div=document.createElement("div");
+div.className="line";
+
+div.innerHTML="<b>"+lines[index][0]+"</b>"+lines[index][1];
+
+document.getElementById("text").appendChild(div);
+
+index++;
+
+setTimeout(writeLine,1500);
+
+}else{
+
+document.getElementById("finalText").style.display="block";
+
+}
+
+}
+
+document.getElementById("env").onclick=function(){
+
+document.body.classList.add("open");
+
+let music=document.getElementById("music");
+music.currentTime=0;
+music.play();
+
+writeLine();
+
+}
+
+/* rosas */
+
+setInterval(()=>{
+
+let rose=document.createElement("div");
+rose.className="rose";
+rose.innerHTML="🌹";
+rose.style.left=Math.random()*100+"vw";
+rose.style.animationDuration=5+Math.random()*5+"s";
+
+document.body.appendChild(rose);
+
+setTimeout(()=>rose.remove(),9000);
+
+},500);
+
+/* corações */
+
+setInterval(()=>{
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=4+Math.random()*4+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),8000);
+
+},600);
+
+</script>
+
+</body>
+</html>
